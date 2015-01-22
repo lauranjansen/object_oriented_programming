@@ -1,7 +1,12 @@
 class Person
+	def initialize(name)
+		@name = name
+	end
+
 	attr_accessor :name
+
 	def greeting
-		puts "Hi, my name is #{name}!"
+		puts "Hi, my name is #{@name}!"
 	end
 end
 
@@ -17,17 +22,16 @@ class Instructor < Person
 	end
 end
 
-chris = Instructor.new
-chris.name = "Chris"
+chris = Instructor.new("Chris")
+# chris.name = "Chris"
 chris.greeting
 
-christina = Student.new
-christina.name = "Christina"
+christina = Student.new("Christina")
+# christina.name = "Christina"
 christina.greeting
 
 chris.teach
 christina.learn
 
 # doesn't work because the Student class doesn't have a method called 'teach'
-
 christina.teach
