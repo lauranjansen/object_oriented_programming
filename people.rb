@@ -9,3 +9,7 @@ class Instructor
 		"Everything in Ruby is an object!"
 	end
 end
+
+class Person
+	attr_accessor :name
+end
