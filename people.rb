@@ -1,9 +1,9 @@
 class Person
+	attr_accessor :name
+
 	def initialize(name)
 		@name = name
 	end
-
-	attr_accessor :name
 
 	def greeting
 		puts "Hi, my name is #{@name}!"
