@@ -1,8 +1,9 @@
 class Rover
-	def initialize(xpos, ypos, direction)
+	def initialize(xpos, ypos, direction, plateau)
 		@x = xpos
 		@y = ypos
 		@direction = direction
+		@plateau = plateau 
 	end
 
 	def read_instructions(instructions)
@@ -18,13 +19,33 @@ class Rover
 	def move
 		case @direction
 		when "N"
-			@y += 1
+			if @y < @plateau.y_size
+				@y += 1
+				puts "Moving north!"
+			else
+				puts "Northern end of plateau reached!"
+			end
 		when "E"
-			@x += 1
+			if @x < @plateau.x_size
+				@x += 1
+				puts "Moving east!"
+			else
+				puts "Eastern end of plateau reached!"
+			end
 		when "S"
-			@y -= 1
+			if @y > 0
+				@y -= 1
+				puts "Moving south!"
+			else
+				puts "Southern end of plateau reached!"
+			end
 		when "W"
-			@x -= 1
+			if @x > 0
+				@x -= 1
+				puts "Moving west!"
+			else
+				puts "Western end of plateau reached!"
+			end
 		end
 	end
 
@@ -49,20 +70,37 @@ class Rover
 	end
 end
 
-print "Please enter the size of the plateau: "
-plateau_size = gets.chomp
+class Plateau
+	attr_accessor :x_size, :y_size
 
-print "Enter the initial position and direction of the first rover: "
-init1 = gets.chomp
-rover1 = Rover.new(init1[0].to_i,init1[2].to_i,init1[4].upcase) 
-print "Enter the instructions for the first rover: "
-rover1.read_instructions(gets.chomp.upcase)
+	def initialize(x_size, y_size)
+		@x_size = x_size
+		@y_size = y_size
+	end
+end
 
-print "Enter the initial position and direction of the second rover: "
-init2 = gets.chomp
-rover2 = Rover.new(init2[0].to_i,init2[2].to_i,init2[4].upcase) 
-print "Enter the instructions for the second rover: "
-rover2.read_instructions(gets.chomp.upcase)
+def run
+	print "Please enter the size of the plateau: "
+	plateau_size = gets.chomp
+	return if plateau_size == ""
+	plateau = Plateau.new(plateau_size[0].to_i - 1, plateau_size[2].to_i - 1)
 
-puts rover1
-puts rover2
+	print "Enter the initial position and direction of the first rover: "
+	init1 = gets.chomp
+	return if init1 == ""
+	rover1 = Rover.new(init1[0].to_i,init1[2].to_i,init1[4].upcase, plateau) 
+	print "Enter the instructions for the first rover: "
+	rover1.read_instructions(gets.chomp.upcase)
+
+	print "Enter the initial position and direction of the second rover: "
+	init2 = gets.chomp
+	return if init2 == ""
+	rover2 = Rover.new(init2[0].to_i,init2[2].to_i,init2[4].upcase, plateau) 
+	print "Enter the instructions for the second rover: "
+	rover2.read_instructions(gets.chomp.upcase)
+
+	puts rover1
+	puts rover2
+end
+
+run
